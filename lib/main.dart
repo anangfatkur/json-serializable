@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
-  Future<String?> getDataUser() async {
+  Future<Map<String, dynamic>?> getDataUser() async {
     Uri url = Uri.parse("https://reqres.in/api/users/2");
     var response = await http.get(url);
 
@@ -37,7 +39,7 @@ class MyHomePage extends StatelessWidget {
       return null;
     } else {
       print(response.body);
-      return response.body;
+      return jsonDecode(response.body) as Map<String, dynamic>;
     }
   }
 
@@ -47,10 +49,10 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Latihan Json Serializable"),
       ),
-      body: FutureBuilder<String?>(
+      body: FutureBuilder<Map<String, dynamic>?>(
         future: getDataUser(),
         builder: (context, snapshot) {
-          return Text("${snapshot.data}");
+          return Text("${snapshot.data!['data']}");
         },
       ),
     );
