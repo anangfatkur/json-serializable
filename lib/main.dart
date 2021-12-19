@@ -52,7 +52,7 @@ class MyHomePage extends StatelessWidget {
       body: FutureBuilder<Map<String, dynamic>?>(
         future: getDataUser(),
         builder: (context, snapshot) {
-          return Text("${snapshot.data!['data']}");
+          return Text("${snapshot.data!['data']['email']}");
         },
       ),
     );
