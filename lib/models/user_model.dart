@@ -1,27 +1,26 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:json_annotation/json_annotation.dart';
+import './data_user_model.dart';
+import './support_user_model.dart';
 
 part 'user_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserModel {
-  final int id;
-  final String email;
-  final String first_name;
-  final String last_name;
-  final String avatar;
+  final DataUserModel data;
+  final SupportUserModel support;
 
   UserModel({
-    required this.id,
-    required this.email,
-    required this.first_name,
-    required this.last_name,
-    required this.avatar,
+    required this.data,
+    required this.support,
   });
 
-  factory UserModel.fromMap(Map<String, dynamic> data) =>
-      _$UserModelFromJson(data);
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+
+  /// Connect the generated [_$PersonToJson] function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   // factory UserModel.fromMap(Map<String, dynamic> data) {
   //   return UserModel(

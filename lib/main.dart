@@ -30,7 +30,7 @@ class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   Future<UserModel?> getDataUser() async {
-    Uri url = Uri.parse("https://reqres.in/api/users/2");
+    Uri url = Uri.parse("https://reqres.in/api/users/5");
     var response = await http.get(url);
 
     print(response.statusCode);
@@ -40,10 +40,10 @@ class MyHomePage extends StatelessWidget {
       return null;
     } else {
       Map<String, dynamic> data =
-          (jsonDecode(response.body) as Map<String, dynamic>)['data'];
+          (jsonDecode(response.body) as Map<String, dynamic>);
       print(response.body);
       // return (jsonDecode(response.body) as Map<String, dynamic>)['data'];
-      return UserModel.fromMap(data);
+      return UserModel.fromJson(data);
       // return UserModel(
       //   id: data["id"],
       //   email: data["email"],
@@ -75,12 +75,21 @@ class MyHomePage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: NetworkImage(snapshot.data!.avatar),
+                      backgroundImage: NetworkImage(snapshot.data!.data.avatar),
                     ),
-                    Text("ID : ${snapshot.data!.id}"),
-                    Text("Email : ${snapshot.data!.email}"),
+                    Text("ID : ${snapshot.data!.data.id}"),
+                    Text("Email : ${snapshot.data!.data.email}"),
                     Text(
-                        "First Name : ${snapshot.data!.first_name} ${snapshot.data!.last_name}"),
+                        "Name : ${snapshot.data!.data.first_name} ${snapshot.data!.data.last_name}"),
+                    SizedBox(height: 30),
+                    Text("URL : ${snapshot.data!.support.url}"),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Text(
+                        "Text : ${snapshot.data!.support.text}",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ],
                 ),
               );
