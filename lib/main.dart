@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, prefer_const_constructors
 
 import 'dart:convert';
 
@@ -39,7 +39,7 @@ class MyHomePage extends StatelessWidget {
       return null;
     } else {
       print(response.body);
-      return jsonDecode(response.body) as Map<String, dynamic>;
+      return (jsonDecode(response.body) as Map<String, dynamic>)['data'];
     }
   }
 
@@ -56,8 +56,27 @@ class MyHomePage extends StatelessWidget {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else {
+            if (snapshot.hasData) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(snapshot.data!['avatar']),
+                    ),
+                    Text("ID : ${snapshot.data!['id']}"),
+                    Text("Email : ${snapshot.data!['email']}"),
+                    Text(
+                        "First Name : ${snapshot.data!['first_name']} ${snapshot.data!['last_name']}"),
+                  ],
+                ),
+              );
+            } else {
+              return Center(child: Text("Tidak ada data"));
+            }
           }
-          return Text("${snapshot.data!['data']['email']}");
         },
       ),
     );
