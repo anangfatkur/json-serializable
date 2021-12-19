@@ -43,13 +43,14 @@ class MyHomePage extends StatelessWidget {
           (jsonDecode(response.body) as Map<String, dynamic>)['data'];
       print(response.body);
       // return (jsonDecode(response.body) as Map<String, dynamic>)['data'];
-      return UserModel(
-        id: data["id"],
-        email: data["email"],
-        first_name: data["first_name"],
-        last_name: data["last_name"],
-        avatar: data["avatar"],
-      );
+      return UserModel.fromMap(data);
+      // return UserModel(
+      //   id: data["id"],
+      //   email: data["email"],
+      //   first_name: data["first_name"],
+      //   last_name: data["last_name"],
+      //   avatar: data["avatar"],
+      // );
     }
   }
 
