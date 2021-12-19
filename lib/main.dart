@@ -52,6 +52,11 @@ class MyHomePage extends StatelessWidget {
       body: FutureBuilder<Map<String, dynamic>?>(
         future: getDataUser(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return Text("${snapshot.data!['data']['email']}");
         },
       ),
